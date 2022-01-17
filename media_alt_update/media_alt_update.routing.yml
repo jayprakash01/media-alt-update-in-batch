@@ -1,0 +1,9 @@
+media_alt_update.admin:
+  path: '/admin/config/media-alt-update'
+  defaults:
+    _form: '\Drupal\media_alt_update\Form\MediaAltUpdateForm'
+    _title: 'Media Alt Update'
+  options:
+    _admin_route: TRUE
+  requirements:
+    _permission: 'administer site configuration'

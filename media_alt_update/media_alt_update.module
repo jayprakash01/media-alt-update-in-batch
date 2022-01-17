@@ -1,0 +1,34 @@
+<?php
+
+/**
+ * @file
+ * Provides a dispatcher for batch processing service.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function media_alt_update_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.media_alt_update':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('The media alt update module allows you to update the alt text of the image for media entity.') . '</p>';
+
+      return $output;
+  }
+}
+
+/**
+ * Batch callback to dispatch the media entity batch operation to a service.
+ */
+function _alt_media_batch_dispatcher() {
+  $args = func_get_args();
+  list($service, $method) = explode(':', array_shift($args));
+  // The second argument (context) is passed by reference.
+  $values = $args[1];
+  $args[1] = &$values;
+  call_user_func_array([\Drupal::service($service), $method], $args);
+}

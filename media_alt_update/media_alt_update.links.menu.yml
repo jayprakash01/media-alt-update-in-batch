@@ -1,0 +1,5 @@
+media_alt_update.admin:
+  title: 'Media Alt Update'
+  description: 'Media alt update in a Bulk.'
+  route_name: media_alt_update.admin
+  parent: 'system.admin_config_development'

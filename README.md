@@ -1,4 +1,4 @@
-# Media alt and title update in batch process
+# Media Alt and Title update in batch process
 
 The media alt update module update the image ALT and Title of the Media entity
 in a batch. In case of empty alt, updating the alt and title with name field of

@@ -3,6 +3,7 @@
 namespace Drupal\media_alt_update;
 
 use Drupal\Core\Database\Connection;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 
@@ -21,6 +22,13 @@ class MediaAltUpdate {
   protected $database;
 
   /**
+   * The entity manager.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected $entityManager;
+
+  /**
    * The messenger.
    *
    * @var \Drupal\Core\Messenger\MessengerInterface
@@ -32,11 +40,14 @@ class MediaAltUpdate {
    *
    * @param \Drupal\Core\Database\Connection $database
    *   The database service.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_manager
+   *   The entity manager service.
    * @param \Drupal\Core\Messenger\MessengerInterface $messenger
    *   The messenger service.
    */
-  public function __construct(Connection $database, MessengerInterface $messenger) {
+  public function __construct(Connection $database, EntityTypeManagerInterface $entity_manager, MessengerInterface $messenger) {
     $this->database = $database;
+    $this->entityManager = $entity_manager;
     $this->messenger = $messenger;
   }
 
@@ -52,7 +63,7 @@ class MediaAltUpdate {
     if (empty($items['mid'])) {
       return;
     }
-    $media = \Drupal::entityTypeManager()->getStorage('media')->load($items['mid']);
+    $media = $this->entityManager->getStorage('media')->load($items['mid']);
     $media->field_media_image = [
       'target_id' => $items['target_id'],
       'alt' => $items['name'],
